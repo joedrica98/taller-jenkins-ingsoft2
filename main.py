@@ -43,28 +43,33 @@ class Order:
             print(f"{meal.name}: {quantity}")
 
 
-menu = [
-    Meal("Pasta", 10, "Regular"),
-    Meal("Burger", 8, "Regular"),
-    Meal("Chef's Special Steak", 25, "Special")
-]
+def run_ordering_system():
+    menu = [
+        Meal("Pasta", 10, "Regular"),
+        Meal("Burger", 8, "Regular"),
+        Meal("Chef's Special Steak", 25, "Special")
+    ]
 
-while True:
-    print("\nMenu:")
-    for i, meal in enumerate(menu):
-        print(f"{i + 1}. {meal.name} (${meal.price}) - {meal.category}")
-
-    order = Order()
     while True:
-        selection = input("\nEnter the number of the meal you want to order, or 'done' to finish ordering: ")
-        if selection.lower() == 'done':
+        print("\nMenu:")
+        for i, meal in enumerate(menu):
+            print(f"{i + 1}. {meal.name} (${meal.price}) - {meal.category}")
+
+        order = Order()
+        while True:
+            selection = input("\nEnter the number of the meal you want to order, or 'done' to finish ordering: ")
+            if selection.lower() == 'done':
+                break
+            quantity = int(input("Enter the quantity: "))
+            order.add_meal(menu[int(selection) - 1], quantity)
+
+        print("\nYour order:")
+        order.display()
+        print(f"Total cost: ${order.get_total()}")
+
+        if input("\nDo you want to make another order? (yes/no) ").lower() != 'yes':
             break
-        quantity = int(input("Enter the quantity: "))
-        order.add_meal(menu[int(selection) - 1], quantity)
 
-    print("\nYour order:")
-    order.display()
-    print(f"Total cost: ${order.get_total()}")
 
-    if input("\nDo you want to make another order? (yes/no) ").lower() != 'yes':
-        break
+if __name__ == "__main__":
+    run_ordering_system()
